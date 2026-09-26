@@ -43,76 +43,150 @@ Operates as a **blazingly fast terminal CLI** by default, with an optional **nat
 - **Developer Cache Isolation:**
   - Quick filter presets: All Items, Folders Only, Heavy (>100MB), Massive (>1GB), and Dev Artifacts (`.git`, `node_modules`, `target`, `build`).
 - **Direct Action Suite:**
-  - **Reveal in Finder** (`Cmd`-click or Open button)
+  - **Reveal in Finder / File Manager** (`Cmd`-click or Open button)
   - **Open in Terminal** directly at the target path
   - **Copy Path** to clipboard
   - **Safe Move to Trash** with reclaimable space confirmation preview
 
 ---
 
-## Quick Start
+## Download & Installation
 
-### Installation
+DiskLens is distributed as a single unified executable that powers both the **Terminal CLI** and the **Native Desktop Application**.
+
+### Option 1: Pre-Built Binaries (GitHub Releases)
+
+Standalone pre-compiled binaries are published on the [GitHub Releases Page](https://github.com/SpaceCorps/DiskLens/releases).
+
+| Platform | Architecture | Binary Package | Mode Included |
+| :--- | :--- | :--- | :--- |
+| **macOS** | Apple Silicon (M1/M2/M3/M4) | [`disklens-v0.1.0-aarch64-apple-darwin.tar.gz`](https://github.com/SpaceCorps/DiskLens/releases/latest) | CLI + Desktop GUI |
+| **macOS** | Intel (x86_64) | [`disklens-v0.1.0-x86_64-apple-darwin.tar.gz`](https://github.com/SpaceCorps/DiskLens/releases/latest) | CLI + Desktop GUI |
+| **Linux** | x86_64 (glibc) | [`disklens-v0.1.0-x86_64-unknown-linux-gnu.tar.gz`](https://github.com/SpaceCorps/DiskLens/releases/latest) | CLI + Desktop GUI |
+| **Windows** | x86_64 | [`disklens-v0.1.0-x86_64-pc-windows-msvc.zip`](https://github.com/SpaceCorps/DiskLens/releases/latest) | CLI + Desktop GUI |
+
+#### Quick Install to Terminal (macOS & Linux)
+
+Download and extract directly to your local PATH (`~/.local/bin` or `/usr/local/bin`):
 
 ```bash
-# Clone the repository
+# macOS (Apple Silicon)
+curl -fsSL https://github.com/SpaceCorps/DiskLens/releases/latest/download/disklens-v0.1.0-aarch64-apple-darwin.tar.gz | tar -xz
+mv disklens ~/.local/bin/
+
+# Linux (x86_64)
+curl -fsSL https://github.com/SpaceCorps/DiskLens/releases/latest/download/disklens-v0.1.0-x86_64-unknown-linux-gnu.tar.gz | tar -xz
+sudo mv disklens /usr/local/bin/
+```
+
+### Option 2: Install via Cargo
+
+```bash
+# Install directly from the GitHub repository
+cargo install --git https://github.com/SpaceCorps/DiskLens
+
+# Or clone and install locally
 git clone https://github.com/SpaceCorps/DiskLens.git
 cd DiskLens
-
-# Install binary to cargo path
 cargo install --path .
 ```
 
-### CLI Usage (Default — Fast Terminal Mode)
+---
 
-No window manager or desktop app download required:
+## How to Use the CLI
+
+When called in a terminal, `disklens` runs the fast parallel scanner with zero GUI overhead:
 
 ```bash
 # Scan current directory
 disklens
 
-# Scan specific folder (e.g. ~/git)
+# Scan target directory (e.g. ~/git)
 disklens ~/git
 
-# Display top 20 heaviest items
-disklens ~/git -n 20
+# Display top 10 heaviest entries
+disklens ~/git -n 10
 
-# Output machine-readable JSON
+# Include hidden files & dotfolders (.git, .cache, etc.)
+disklens -a
+
+# Output structured JSON for automation or LLM tools
 disklens ~/git --json
 ```
 
 Example CLI Output:
 
 ```
-DiskLens — Fast Disk Space Analyzer
-Target: /Users/rorychatt/git
-Volume: Macintosh HD (apfs) | Total: 926.35 GB | Free: 35.12 GB (96.2% used)
+DiskLens v0.1.0 · SpaceCorps
+Volume: Macintosh HD [apfs] · 926.35 GB Total · 564.03 GB Free (39.1% used)
+Target: /Users/rorychatt/git/spacecorps (178.04 GB · 19.22% of disk)
 
-  SIZE         DISK %   DIR %   VISUAL GAUGE       NAME
---------------------------------------------------------------------------------
-  45.20 GB      4.88%   42.1%   [████████░░░░]     Space3d/
-  18.10 GB      1.95%   16.9%   [███░░░░░░░░░]     DiskLens/
-   9.30 GB      1.00%    8.7%   [██░░░░░░░░░░]     hangar/
- 820.00 MB      0.09%    0.8%   [░░░░░░░░░░░░]     installer.dmg
---------------------------------------------------------------------------------
-Total: 107.40 GB in 14 items (11.59% of disk)
-```
-
-### Desktop GUI Mode
-
-Launch the interactive desktop window with `--gui`:
-
-```bash
-# Launch GUI at current directory
-disklens --gui
-
-# Launch GUI at specific path
-disklens ~/git/spacecorps --gui
+FILL GAUGE               DISK %    DIR %        SIZE     ITEMS  NAME
+────────────────────────────────────────────────────────────────────────────────────
+[████████████████████]     5.43%    28.2%    50.29 GB  151.4k items  Space3d/
+[██████████░░░░░░░░░░]     2.77%    14.4%    25.70 GB   43.4k items  SpaceCorps2027-wt/
+[██████████░░░░░░░░░░]     2.73%    14.2%    25.33 GB   73.6k items  Space3d-graphics/
+[████████░░░░░░░░░░░░]     2.06%    10.7%    19.12 GB   49.6k items  Space3d-gfx-particles/
+[███████░░░░░░░░░░░░░]     1.81%     9.4%    16.74 GB   68.7k items  SpaceCorps2027/
+────────────────────────────────────────────────────────────────────────────────────
+Total: 44 items · 178.04 GB · 19.22% of entire disk · Scanned in 5734ms
 ```
 
 ---
 
-## Keyboard Shortcuts (GUI)
+## How to Use the Desktop App
+
+The same binary can be launched in graphical mode at any time.
+
+### Launching the Desktop Window
+
+```bash
+# Launch desktop GUI at current directory
+disklens --gui
+
+# Launch desktop GUI focused on a specific directory
+disklens ~/git/spacecorps --gui
+```
+
+### Adding to macOS Applications / Dock
+
+To launch DiskLens from Spotlight, Finder, or your Dock without needing a terminal:
+
+```bash
+# Create a native macOS Application launcher
+osacompile -e 'do shell script "disklens --gui >/dev/null 2>&1 &"' -o /Applications/DiskLens.app
+```
+
+Now you can press `Cmd + Space`, search for **DiskLens**, and launch it directly from macOS.
+
+### Adding to Linux Applications Menu
+
+Create a desktop entry at `~/.local/share/applications/disklens.desktop`:
+
+```ini
+[Desktop Entry]
+Name=DiskLens
+Comment=Disk Space Visualizer & File Explorer
+Exec=disklens --gui
+Icon=drive-harddisk
+Terminal=false
+Type=Application
+Categories=Utility;System;FileManager;
+```
+
+### Windows Desktop Shortcut
+
+1. Right-click `disklens.exe` and select **Create Shortcut**.
+2. Right-click the shortcut and open **Properties**.
+3. In the **Target** field, add `--gui` at the end:
+   ```text
+   "C:\path\to\disklens.exe" --gui
+   ```
+4. Double-click the shortcut to open the desktop application directly.
+
+---
+
+## Keyboard Shortcuts (Desktop GUI)
 
 | Shortcut | Action |
 | :--- | :--- |
