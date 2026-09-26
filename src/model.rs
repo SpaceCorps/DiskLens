@@ -72,14 +72,14 @@ impl FileCategory {
 
     pub fn icon(&self) -> &'static str {
         match self {
-            FileCategory::Folder => "📁",
-            FileCategory::Git => "🐙",
-            FileCategory::BuildArtifact => "📦",
-            FileCategory::Archive => "🗜️",
-            FileCategory::Media => "🎬",
-            FileCategory::Code => "💻",
-            FileCategory::Document => "📄",
-            FileCategory::Generic => "📄",
+            FileCategory::Folder => "[dir]",
+            FileCategory::Git => "[git]",
+            FileCategory::BuildArtifact => "[pkg]",
+            FileCategory::Archive => "[arc]",
+            FileCategory::Media => "[media]",
+            FileCategory::Code => "[code]",
+            FileCategory::Document => "[doc]",
+            FileCategory::Generic => "[file]",
         }
     }
 }

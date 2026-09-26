@@ -9,7 +9,6 @@ pub fn render_disk_banner(ui: &mut Ui, volume: &VolumeInfo, current_folder_size:
 
         ui.horizontal(|ui| {
             // Volume identity
-            ui.label(RichText::new("💾").size(14.0));
             ui.label(
                 RichText::new(format!("{} ({})", volume.name, volume.fs_type))
                     .strong()
@@ -45,7 +44,7 @@ pub fn render_disk_banner(ui: &mut Ui, volume: &VolumeInfo, current_folder_size:
                 let badge_color = ThemeColors::color_for_disk_percent(folder_share_pct);
                 ui.label(
                     RichText::new(format!(
-                        "📁 This Folder: {} ({:.2}% of Disk)",
+                        "This Folder: {} ({:.2}% of Disk)",
                         format_bytes(current_folder_size),
                         folder_share_pct
                     ))

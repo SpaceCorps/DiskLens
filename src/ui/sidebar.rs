@@ -41,18 +41,18 @@ pub fn render_sidebar(
         let home_dir = dirs::home_dir();
 
         if let Some(ref home) = home_dir {
-            render_shortcut_button(ui, "🏠 Home", home, current_path, &mut action);
+            render_shortcut_button(ui, "Home", home, current_path, &mut action);
 
             let git_dir = home.join("git");
             if git_dir.exists() {
-                render_shortcut_button(ui, "🐙 Git Repos", &git_dir, current_path, &mut action);
+                render_shortcut_button(ui, "Git Repos", &git_dir, current_path, &mut action);
             }
 
             let spacecorps_dir = home.join("git").join("spacecorps");
             if spacecorps_dir.exists() {
                 render_shortcut_button(
                     ui,
-                    "🚀 SpaceCorps",
+                    "SpaceCorps",
                     &spacecorps_dir,
                     current_path,
                     &mut action,
@@ -61,23 +61,23 @@ pub fn render_sidebar(
 
             let downloads = dirs::download_dir().unwrap_or_else(|| home.join("Downloads"));
             if downloads.exists() {
-                render_shortcut_button(ui, "📥 Downloads", &downloads, current_path, &mut action);
+                render_shortcut_button(ui, "Downloads", &downloads, current_path, &mut action);
             }
 
             let documents = dirs::document_dir().unwrap_or_else(|| home.join("Documents"));
             if documents.exists() {
-                render_shortcut_button(ui, "📄 Documents", &documents, current_path, &mut action);
+                render_shortcut_button(ui, "Documents", &documents, current_path, &mut action);
             }
 
             let desktop = dirs::desktop_dir().unwrap_or_else(|| home.join("Desktop"));
             if desktop.exists() {
-                render_shortcut_button(ui, "🖥️ Desktop", &desktop, current_path, &mut action);
+                render_shortcut_button(ui, "Desktop", &desktop, current_path, &mut action);
             }
         }
 
         render_shortcut_button(
             ui,
-            "🗄️ Root Filesystem",
+            "Root Filesystem",
             Path::new("/"),
             current_path,
             &mut action,
@@ -97,7 +97,7 @@ pub fn render_sidebar(
 
         for vol in volumes {
             let is_selected = current_path.starts_with(&vol.mount_point);
-            let btn_text = format!("💾 {}", vol.name);
+            let btn_text = vol.name.clone();
             let total_str = format_bytes(vol.total_bytes);
             let free_str = format_bytes(vol.available_bytes);
 
@@ -172,14 +172,14 @@ pub fn render_sidebar(
                     let bmark_name = bmark.file_name().and_then(|n| n.to_str()).unwrap_or("/");
                     let is_active = current_path == bmark;
                     if ui
-                        .selectable_label(is_active, format!("⭐ {}", bmark_name))
+                        .selectable_label(is_active, bmark_name)
                         .on_hover_text(bmark.to_string_lossy())
                         .clicked()
                     {
                         action.navigate_to = Some(bmark.clone());
                     }
                     if ui
-                        .button(RichText::new("✕").size(10.0).color(ThemeColors::TEXT_FAINT))
+                        .button(RichText::new("x").size(10.0).color(ThemeColors::TEXT_FAINT))
                         .on_hover_text("Remove bookmark")
                         .clicked()
                     {
@@ -202,25 +202,19 @@ pub fn render_sidebar(
         );
 
         if ui
-            .selectable_label(*active_filter == FilterPreset::All, "📋 All Items")
+            .selectable_label(*active_filter == FilterPreset::All, "All Items")
             .clicked()
         {
             *active_filter = FilterPreset::All;
         }
         if ui
-            .selectable_label(
-                *active_filter == FilterPreset::FoldersOnly,
-                "📁 Folders Only",
-            )
+            .selectable_label(*active_filter == FilterPreset::FoldersOnly, "Folders Only")
             .clicked()
         {
             *active_filter = FilterPreset::FoldersOnly;
         }
         if ui
-            .selectable_label(
-                *active_filter == FilterPreset::HeavyOnly,
-                "🔥 Heavy (>100MB)",
-            )
+            .selectable_label(*active_filter == FilterPreset::HeavyOnly, "Heavy (>100MB)")
             .clicked()
         {
             *active_filter = FilterPreset::HeavyOnly;
@@ -228,7 +222,7 @@ pub fn render_sidebar(
         if ui
             .selectable_label(
                 *active_filter == FilterPreset::MassiveOnly,
-                "🚨 Massive (>1GB)",
+                "Massive (>1GB)",
             )
             .clicked()
         {
@@ -237,7 +231,7 @@ pub fn render_sidebar(
         if ui
             .selectable_label(
                 *active_filter == FilterPreset::DevArtifacts,
-                "📦 Dev Caches (.git, etc.)",
+                "Dev Caches (.git, etc.)",
             )
             .on_hover_text("Find .git, node_modules, target, build")
             .clicked()
@@ -251,7 +245,7 @@ pub fn render_sidebar(
         // Maintenance
         if ui
             .button(
-                RichText::new("🗑 Clear Size Cache")
+                RichText::new("Clear Size Cache")
                     .size(11.0)
                     .color(ThemeColors::TEXT_MUTED),
             )

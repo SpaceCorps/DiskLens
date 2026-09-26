@@ -32,7 +32,7 @@ pub fn render_bottom_bar(
 
         ui.label(
             RichText::new(format!(
-                "📁 Total: {} items ({}) • {:.2}% of disk",
+                "Total: {} items ({}) • {:.2}% of disk",
                 entries_count,
                 format_bytes(current_folder_size),
                 folder_pct
@@ -45,23 +45,20 @@ pub fn render_bottom_bar(
 
         if let Some(notice) = status_notice {
             ui.label(
-                RichText::new(format!("⚡ {}", notice))
+                RichText::new(notice)
                     .size(11.0)
                     .strong()
                     .color(ThemeColors::CYAN),
             );
         } else if scanning_count > 0 {
             ui.label(
-                RichText::new(format!(
-                    "⏳ Computing size for {} folders...",
-                    scanning_count
-                ))
-                .size(11.0)
-                .color(ThemeColors::WARNING_AMBER),
+                RichText::new(format!("Computing size for {} folders...", scanning_count))
+                    .size(11.0)
+                    .color(ThemeColors::WARNING_AMBER),
             );
         } else {
             ui.label(
-                RichText::new("✓ All sizes calculated")
+                RichText::new("All sizes calculated")
                     .size(11.0)
                     .color(ThemeColors::LIGHT_GREEN),
             );
@@ -74,7 +71,7 @@ pub fn render_bottom_bar(
 
                 if ui
                     .button(
-                        RichText::new("🗑 Trash")
+                        RichText::new("Trash")
                             .size(11.0)
                             .color(ThemeColors::CRITICAL_RED),
                     )
@@ -83,7 +80,7 @@ pub fn render_bottom_bar(
                     action.trash_selected = true;
                 }
 
-                if ui.button(RichText::new("🔍 Reveal").size(11.0)).clicked() {
+                if ui.button(RichText::new("Reveal").size(11.0)).clicked() {
                     action.reveal_selected = true;
                 }
 

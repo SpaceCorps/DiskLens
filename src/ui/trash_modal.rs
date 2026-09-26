@@ -20,7 +20,12 @@ pub fn render_trash_modal(ctx: &Context, entry: &FileEntry) -> Option<TrashModal
             ui.spacing_mut().item_spacing.y = 12.0;
 
             ui.horizontal(|ui| {
-                ui.label(RichText::new("⚠️").size(24.0));
+                ui.label(
+                    RichText::new("[!]")
+                        .size(16.0)
+                        .strong()
+                        .color(ThemeColors::CRITICAL_RED),
+                );
                 ui.vertical(|ui| {
                     ui.label(
                         RichText::new("Move to System Trash?")

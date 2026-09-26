@@ -1,10 +1,13 @@
 # DiskLens — SpaceCorps Agent Manual
 
-> DiskLens is a native Rust desktop file explorer and disk space analyzer that provides real-time percentage gauges of volume capacity and folder weight.
+> DiskLens is a high-speed disk space analyzer and file explorer in Rust that provides real-time percentage gauges of volume capacity and folder weight. Operates as a fast terminal CLI by default, with an optional native desktop GUI.
 
 ## Core Capabilities
 
-- **Launch:** `disklens [PATH]`
+- **Terminal Scan (Default):** `disklens [PATH]`
+- **Top N Items:** `disklens [PATH] -n <COUNT>`
+- **Machine Output:** `disklens [PATH] --json`
+- **Desktop GUI:** `disklens [PATH] --gui`
 - **Help:** `disklens --help`
 - **Version:** `disklens --version`
 - **Percentage Modes:**

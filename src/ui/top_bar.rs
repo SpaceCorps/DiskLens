@@ -153,9 +153,13 @@ pub fn render_top_bar(
                     }
                 }
 
-                // Edit path pencil button
+                // Edit path button
                 if ui
-                    .button(RichText::new("✏").size(11.0).color(ThemeColors::TEXT_MUTED))
+                    .button(
+                        RichText::new("[edit]")
+                            .size(11.0)
+                            .color(ThemeColors::TEXT_MUTED),
+                    )
                     .on_hover_text("Edit path manually")
                     .clicked()
                 {
@@ -168,9 +172,9 @@ pub fn render_top_bar(
         ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
             // Hidden files toggle
             let hidden_label = if *show_hidden {
-                "👁 Hidden"
+                "Hidden: on"
             } else {
-                "👁‍🗨 Hidden"
+                "Hidden: off"
             };
             if ui
                 .selectable_label(*show_hidden, RichText::new(hidden_label).size(11.0))
@@ -189,7 +193,7 @@ pub fn render_top_bar(
                     .color(ThemeColors::TEXT_MUTED),
             );
             if ui
-                .selectable_label(*display_mode == PercentageDisplayMode::Dual, "⚡ Dual")
+                .selectable_label(*display_mode == PercentageDisplayMode::Dual, "Dual")
                 .on_hover_text("Show both Disk % and Folder %")
                 .clicked()
             {
@@ -198,7 +202,7 @@ pub fn render_top_bar(
             if ui
                 .selectable_label(
                     *display_mode == PercentageDisplayMode::FolderPercent,
-                    "📁 Folder %",
+                    "Folder %",
                 )
                 .on_hover_text("Bar shows % of current parent folder")
                 .clicked()
@@ -208,7 +212,7 @@ pub fn render_top_bar(
             if ui
                 .selectable_label(
                     *display_mode == PercentageDisplayMode::DiskPercent,
-                    "💾 Disk %",
+                    "Disk %",
                 )
                 .on_hover_text("Bar shows % of total hard drive capacity")
                 .clicked()
@@ -219,14 +223,14 @@ pub fn render_top_bar(
             ui.separator();
 
             // Search Filter
-            let clear_clicked = ui.button("✕").clicked();
+            let clear_clicked = ui.button("x").clicked();
             if clear_clicked {
                 search_query.clear();
             }
             ui.add(
                 TextEdit::singleline(search_query)
                     .desired_width(140.0)
-                    .hint_text("🔍 Filter files..."),
+                    .hint_text("Filter files..."),
             );
         });
     });

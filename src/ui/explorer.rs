@@ -203,7 +203,7 @@ pub fn render_explorer(
                 ui.add_space(40.0);
                 ui.vertical_centered(|ui| {
                     ui.label(
-                        RichText::new("📁 Empty Folder or No Matches")
+                        RichText::new("Empty Folder or No Matches")
                             .size(16.0)
                             .color(ThemeColors::TEXT_MUTED),
                     );
@@ -278,21 +278,21 @@ pub fn render_explorer(
                         let bar_label = match display_mode {
                             PercentageDisplayMode::DiskPercent => {
                                 if entry.is_scanning {
-                                    "⏳ calculating...".to_string()
+                                    "calculating...".to_string()
                                 } else {
                                     format!("{:.2}% of Disk", disk_pct)
                                 }
                             }
                             PercentageDisplayMode::FolderPercent => {
                                 if entry.is_scanning {
-                                    "⏳ calculating...".to_string()
+                                    "calculating...".to_string()
                                 } else {
                                     format!("{:.1}% of Folder", folder_pct)
                                 }
                             }
                             PercentageDisplayMode::Dual => {
                                 if entry.is_scanning {
-                                    "⏳ calculating...".to_string()
+                                    "calculating...".to_string()
                                 } else {
                                     format!("{:.1}% dir • {:.2}% disk", folder_pct, disk_pct)
                                 }
@@ -312,7 +312,9 @@ pub fn render_explorer(
                             // Quick Action Buttons
                             if ui
                                 .button(
-                                    RichText::new("🗑").size(12.0).color(ThemeColors::TEXT_MUTED),
+                                    RichText::new("Del")
+                                        .size(10.0)
+                                        .color(ThemeColors::CRITICAL_RED),
                                 )
                                 .on_hover_text("Move to Trash")
                                 .clicked()
@@ -322,8 +324,8 @@ pub fn render_explorer(
 
                             if ui
                                 .button(
-                                    RichText::new("📋")
-                                        .size(12.0)
+                                    RichText::new("Copy")
+                                        .size(10.0)
                                         .color(ThemeColors::TEXT_MUTED),
                                 )
                                 .on_hover_text("Copy Path to Clipboard")
@@ -334,8 +336,8 @@ pub fn render_explorer(
 
                             if ui
                                 .button(
-                                    RichText::new("💻")
-                                        .size(12.0)
+                                    RichText::new("Term")
+                                        .size(10.0)
                                         .color(ThemeColors::TEXT_MUTED),
                                 )
                                 .on_hover_text("Open in Terminal")
@@ -346,8 +348,8 @@ pub fn render_explorer(
 
                             if ui
                                 .button(
-                                    RichText::new("🔍")
-                                        .size(12.0)
+                                    RichText::new("Open")
+                                        .size(10.0)
                                         .color(ThemeColors::TEXT_MUTED),
                                 )
                                 .on_hover_text("Reveal in Finder")

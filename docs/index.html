@@ -270,7 +270,7 @@
 </head>
 <body>
   <header>
-    <a href="#" class="brand">🔍 DiskLens</a>
+    <a href="#" class="brand">DiskLens</a>
     <nav>
       <a href="about.html">About</a>
       <a href="privacy.html">Privacy</a>
@@ -282,13 +282,13 @@
 
   <main>
     <div class="hero">
-      <div class="badge">🚀 Native Rust Desktop Application</div>
+      <div class="badge">Fast Rust CLI &amp; Desktop App</div>
       <h1>Easily Find Heavy Folders.<br>See Exact Disk Fill %.</h1>
       <p class="lead">
-        A blazingly fast native file explorer that calculates and visualizes real-time disk capacity percentages. Never wonder what swallowed your hard drive again.
+        A blazingly fast disk visualizer that calculates and displays real-time capacity percentages. Run instantly in your terminal or launch the native desktop GUI.
       </p>
       <div class="cta-group">
-        <a href="https://github.com/SpaceCorps/DiskLens" class="btn btn-primary">Download on GitHub ➔</a>
+        <a href="https://github.com/SpaceCorps/DiskLens" class="btn btn-primary">View on GitHub &rarr;</a>
         <a href="llms.txt" class="btn btn-secondary">Agent Manual (llms.txt)</a>
       </div>
     </div>
@@ -302,19 +302,19 @@
       </div>
       <div class="preview-content">
         <div class="mock-row" style="color: #ef4444; font-weight: bold;">
-          <span>📁 Space3d / target</span>
+          <span>[dir] Space3d / target</span>
           <span><span class="mock-bar" style="width: 240px; background: #ef4444;"></span> 4.54% of Disk (45.2 GB)</span>
         </div>
         <div class="mock-row" style="color: #f59e0b;">
-          <span>📁 hangar / node_modules</span>
+          <span>[dir] hangar / node_modules</span>
           <span><span class="mock-bar" style="width: 130px; background: #f59e0b;"></span> 1.82% of Disk (18.1 GB)</span>
         </div>
         <div class="mock-row" style="color: #38bdf8;">
-          <span>📁 .git / objects</span>
+          <span>[dir] .git / objects</span>
           <span><span class="mock-bar" style="width: 70px; background: #38bdf8;"></span> 0.94% of Disk (9.3 GB)</span>
         </div>
         <div class="mock-row" style="color: #10b981;">
-          <span>📄 installer.dmg</span>
+          <span>[file] installer.dmg</span>
           <span><span class="mock-bar" style="width: 20px; background: #10b981;"></span> 0.08% of Disk (820 MB)</span>
         </div>
       </div>
@@ -322,21 +322,21 @@
 
     <div class="features-grid">
       <div class="feature-card">
-        <div class="feature-icon">📊</div>
-        <h3>Dual Percentage Modes</h3>
-        <p>Toggle between Disk % (how much of your total hard drive is occupied) and Folder % (share within the current parent folder), or show both simultaneously.</p>
+        <div class="feature-badge" style="color: var(--accent); font-weight: bold; font-family: monospace; font-size: 1.1rem; margin-bottom: 12px;">[ CLI ]</div>
+        <h3>Instant Terminal Mode</h3>
+        <p>Run <code>disklens [PATH]</code> for sub-50ms parallel terminal scanning across all CPU cores with ASCII percentage bars and zero GUI overhead.</p>
       </div>
 
       <div class="feature-card">
-        <div class="feature-icon">⚡</div>
-        <h3>Rayon Background Engine</h3>
-        <p>Instant file enumeration in less than 1 millisecond. Recursive sizing runs asynchronously on a thread pool so your UI never freezes or stutters.</p>
+        <div class="feature-badge" style="color: var(--accent); font-weight: bold; font-family: monospace; font-size: 1.1rem; margin-bottom: 12px;">[ % ]</div>
+        <h3>Dual Percentage Gauges</h3>
+        <p>Inspect Disk % (share of your total drive capacity) and Dir % (share within current directory) to immediately pinpoint storage hogs.</p>
       </div>
 
       <div class="feature-card">
-        <div class="feature-icon">📦</div>
-        <h3>Dev Cache Preset Filter</h3>
-        <p>One-click filters isolate `.git`, `node_modules`, `target`, and build caches so you can reclaim tens of gigabytes in seconds.</p>
+        <div class="feature-badge" style="color: var(--accent); font-weight: bold; font-family: monospace; font-size: 1.1rem; margin-bottom: 12px;">[ DEV ]</div>
+        <h3>Dev Cache Presets</h3>
+        <p>One-click filters isolate <code>.git</code>, <code>node_modules</code>, <code>target</code>, and build caches so you can reclaim tens of gigabytes in seconds.</p>
       </div>
     </div>
   </main>

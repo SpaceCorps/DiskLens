@@ -6,7 +6,7 @@
 - **Organization:** SpaceCorps
 - **Repository:** https://github.com/SpaceCorps/DiskLens
 - **License:** MIT
-- **Architecture:** Standalone Native Desktop App (Rust + eframe/egui)
+- **Architecture:** Dual-mode CLI & Desktop Application (Rust + Rayon + eframe/egui)
 - **Primary Objective:** Provide instant visual clarity on heavy folders and disk space allocation through continuous percentage fill bars.
 
 ## 1. Mathematical Specifications
