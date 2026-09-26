@@ -1,0 +1,13 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "name": "disklens",
+  "version": "0.1.0",
+  "description": "Analyze storage capacity and find heavy folders using native Rust Desktop GUI.",
+  "skills": [
+    {
+      "id": "explore_disk_usage",
+      "name": "Explore Disk Usage",
+      "description": "Inspect and navigate directory storage with real-time percentage fill gauges."
+    }
+  ]
+}

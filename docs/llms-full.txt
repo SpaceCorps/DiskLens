@@ -1,0 +1,48 @@
+# DiskLens — Complete Agent & Technical Manual
+
+## Product Specification
+
+- **Name:** DiskLens
+- **Organization:** SpaceCorps
+- **Repository:** https://github.com/SpaceCorps/DiskLens
+- **License:** MIT
+- **Architecture:** Standalone Native Desktop App (Rust + eframe/egui)
+- **Primary Objective:** Provide instant visual clarity on heavy folders and disk space allocation through continuous percentage fill bars.
+
+## 1. Mathematical Specifications
+
+### Disk Fill Percentage
+```
+disk_percent = (entry.size_bytes / volume.total_bytes) * 100.0
+```
+- Informs the user of the exact impact an individual folder has on their overall machine capacity.
+- Evaluates against the host volume (macOS APFS volume, Linux ext4/btrfs mount, Windows NTFS drive).
+
+### Parent Directory Percentage
+```
+folder_percent = (entry.size_bytes / current_folder_total_size) * 100.0
+```
+- Informs the user which sibling folder inside the current directory accounts for the bulk of space.
+
+## 2. Background Engine Architecture
+
+- **UI Thread:** Responsible solely for immediate enumeration (`std::fs::read_dir`) and 60 FPS drawing. Never blocks on deep recursion.
+- **Worker Pool:** Uses `rayon` parallel iterators across directory entries. Each subfolder runs `WalkDir::new(dir)`.
+- **Cancellation:** Atomic generation IDs and `AtomicBool` flags abort active background walks whenever the user navigates to another folder.
+- **Cache:** Stores `(size, count, timestamp)` in an in-memory hash map.
+
+## 3. Keyboard Shortcuts
+
+- `Alt + Left`: History Back
+- `Alt + Right`: History Forward
+- `Alt + Up`: Parent Directory
+- `Cmd + R`: Rescan / Refresh
+- `Cmd + L`: Direct Path Input
+- `Escape`: Cancel editing / close dialogs
+- `Enter`: Navigate or submit path
+
+## 4. Trust & Security
+
+- Zero network telemetry or remote pings.
+- All file operations are strictly local.
+- Deletion requests route to `trash::delete` to move files safely to the system Recycle Bin / Trash.

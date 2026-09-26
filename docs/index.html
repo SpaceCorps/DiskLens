@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DiskLens — High-Performance Native Disk Space File Explorer</title>
+  <link rel="canonical" href="https://spacecorps.github.io/DiskLens/">
+  <meta name="description" content="Native Rust desktop file explorer & disk space visualizer with real-time percentage fill gauges to find heavy folders instantly.">
+  <meta name="is-agentic-site-type" content="content">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+  <!-- OpenGraph -->
+  <meta property="og:title" content="DiskLens — SpaceCorps Native Disk Space File Explorer">
+  <meta property="og:description" content="Instantly find the heavy folders eating your hard drive with real-time disk % fill gauges and native 60fps performance.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://spacecorps.github.io/DiskLens/">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DiskLens — Native Disk Space File Explorer">
+  <meta name="twitter:description" content="Native Rust desktop file explorer with real-time % fill gauges.">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "DiskLens",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "macOS, Linux, Windows",
+        "downloadUrl": "https://github.com/SpaceCorps/DiskLens/releases",
+        "license": "https://opensource.org/licenses/MIT",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      },
+      {
+        "@type": "Organization",
+        "name": "SpaceCorps",
+        "url": "https://github.com/SpaceCorps"
+      }
+    ]
+  }
+  </script>
+
+  <script>
+    if (new URLSearchParams(window.location.search).get('mode') === 'agent') {
+      window.location.href = 'llms.txt';
+    }
+  </script>
+
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(22, 27, 34, 0.7);
+      --card-border: rgba(56, 189, 248, 0.2);
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.3);
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --success: #10b981;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at 50% 0%, #172554 0%, var(--bg) 60%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      font-weight: 800;
+      font-size: 1.3rem;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-left: 24px;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--accent); }
+
+    main {
+      flex: 1;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 64px 24px;
+      width: 100%;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 3.2rem;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+
+    .lead {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 36px;
+    }
+
+    .cta-group {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .btn {
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0b0f19;
+      box-shadow: 0 0 24px var(--accent-glow);
+    }
+    .btn-primary:hover {
+      background: #7dd3fc;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .preview-card {
+      background: rgba(13, 17, 23, 0.8);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      margin-bottom: 64px;
+    }
+
+    .preview-header {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-red { background: #ff5f56; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #27c93f; }
+
+    .preview-content {
+      padding: 24px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.9rem;
+    }
+
+    .mock-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .mock-bar {
+      height: 12px;
+      border-radius: 6px;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 28px;
+      border-radius: 12px;
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .feature-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 32px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="#" class="brand">🔍 DiskLens</a>
+    <nav>
+      <a href="about.html">About</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="contact.html">Contact</a>
+      <a href="llms.txt">llms.txt</a>
+      <a href="https://github.com/SpaceCorps/DiskLens">GitHub</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div class="badge">🚀 Native Rust Desktop Application</div>
+      <h1>Easily Find Heavy Folders.<br>See Exact Disk Fill %.</h1>
+      <p class="lead">
+        A blazingly fast native file explorer that calculates and visualizes real-time disk capacity percentages. Never wonder what swallowed your hard drive again.
+      </p>
+      <div class="cta-group">
+        <a href="https://github.com/SpaceCorps/DiskLens" class="btn btn-primary">Download on GitHub ➔</a>
+        <a href="llms.txt" class="btn btn-secondary">Agent Manual (llms.txt)</a>
+      </div>
+    </div>
+
+    <div class="preview-card">
+      <div class="preview-header">
+        <div class="dot dot-red"></div>
+        <div class="dot dot-yellow"></div>
+        <div class="dot dot-green"></div>
+        <span style="margin-left: 12px; font-size: 0.85rem; color: #9ca3af;">DiskLens — Macintosh HD • 926 GB Total • 35 GB Available (96% Used)</span>
+      </div>
+      <div class="preview-content">
+        <div class="mock-row" style="color: #ef4444; font-weight: bold;">
+          <span>📁 Space3d / target</span>
+          <span><span class="mock-bar" style="width: 240px; background: #ef4444;"></span> 4.54% of Disk (45.2 GB)</span>
+        </div>
+        <div class="mock-row" style="color: #f59e0b;">
+          <span>📁 hangar / node_modules</span>
+          <span><span class="mock-bar" style="width: 130px; background: #f59e0b;"></span> 1.82% of Disk (18.1 GB)</span>
+        </div>
+        <div class="mock-row" style="color: #38bdf8;">
+          <span>📁 .git / objects</span>
+          <span><span class="mock-bar" style="width: 70px; background: #38bdf8;"></span> 0.94% of Disk (9.3 GB)</span>
+        </div>
+        <div class="mock-row" style="color: #10b981;">
+          <span>📄 installer.dmg</span>
+          <span><span class="mock-bar" style="width: 20px; background: #10b981;"></span> 0.08% of Disk (820 MB)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Dual Percentage Modes</h3>
+        <p>Toggle between Disk % (how much of your total hard drive is occupied) and Folder % (share within the current parent folder), or show both simultaneously.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Rayon Background Engine</h3>
+        <p>Instant file enumeration in less than 1 millisecond. Recursive sizing runs asynchronously on a thread pool so your UI never freezes or stutters.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📦</div>
+        <h3>Dev Cache Preset Filter</h3>
+        <p>One-click filters isolate `.git`, `node_modules`, `target`, and build caches so you can reclaim tens of gigabytes in seconds.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2026 SpaceCorps. Open source under the MIT License.
+  </footer>
+</body>
+</html>

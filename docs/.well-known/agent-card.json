@@ -1,0 +1,15 @@
+{
+  "name": "DiskLens",
+  "version": "0.1.0",
+  "description": "High-performance native Rust desktop file explorer & disk space visualizer with real-time percentage fill gauges.",
+  "homepage": "https://spacecorps.github.io/DiskLens/",
+  "repository": "https://github.com/SpaceCorps/DiskLens",
+  "author": "SpaceCorps",
+  "license": "MIT",
+  "capabilities": [
+    "file_explorer",
+    "disk_space_analyzer",
+    "percentage_gauge",
+    "cache_detection"
+  ]
+}

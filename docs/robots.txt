@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://spacecorps.github.io/DiskLens/sitemap.xml
